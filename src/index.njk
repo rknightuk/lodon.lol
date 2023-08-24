@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width" />
+
+        <link rel="preconnect" href="https://fonts.bunny.net">
+		<link href="https://fonts.bunny.net/css?family=atkinson-hyperlegible:400,400i,700,700i" rel="stylesheet" />
+
+        <title>{{ config.title }}: {{ config.desc }}</title>
+
+        <link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+        <link rel="manifest" href="/assets/icons/site.webmanifest">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+        <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+
+        <meta property="og:title" content="{{ config.title }}" />
+        <meta property="description" content="{{ config.desc }}" />
+        <meta property="og:description" content="{{ config.desc }}" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://lodon.lol/" />
+        <meta property="og:image" content="https://lodon.lol/assets/preview.png">
+
+        <script src="https://cdn.usefathom.com/script.js" data-site="DYWXLUNV" defer></script>
+
+    </head>
+    <body>
+
+        <a style="display: none;" rel="me" href="https://social.lol/@robb">Mastodon</a>
+
+        <header>
+            <h1><span class="header-brand">lodon.lol</span></h1>
+            <h2>Tag Yourself at Relay's 10th Anniversary Extravaganza</h2>
+
+            <div class="info">
+                <p>Relay are having a <a href="https://relay.fm/london">10th anniversary show</a> and there's lots of people going. Tag yourself by filling in <a href="https://forms.gle/CCKtxcSF1yCghccd6" target="_blank" rel="noopener">this Google form</a>. The site rebuilds every 10 minutes and pulls in the new data. If it doesn't, shout at Robb <a href="https://social.lol/@robb">on the 'don</a> or on Discord (rknightuk).</p>
+            </div>
+        </header>
+
+        <input type="radio" id="stalls" name="toggle" checked="checked"><label for="stalls">Stalls</label>
+        <input type="radio" id="dresscircle" name="toggle"><label for="dresscircle">Dress Circle</label>
+        <input type="radio" id="uppercircle" name="toggle"><label for="uppercircle">Upper Circle</label>
+
+        <dialog id="dialog">
+            <div class="container">
+                <a href="#" id="close-button">
+                    ×
+                </a>
+                <div>
+                    <h1><span id="modal-seat" class="header-brand"></span></h1>
+                    <p><strong id="modal-name" class="text-brand"></strong></p>
+                    <p><a id="modal-link" href="" target="_blank" rel="noopener"></a></p>
+                    <p id="modal-discord"></p>
+                </div>
+            </div>
+        </dialog>
+
+        <div id="wrap-uppercircle" class="wrap-outer">
+
+            <h1><span class="header-brand">Upper Circle</span></h1>
+
+            <div class="wrap-seats" style="grid-template-columns: repeat(55, 1fr)">
+                {%- for key in uppercircle.seats %}
+                    {%- for seat in key.seats %}
+                        {% if seat.labelOnly %}
+                            <div><strong>{{ seat.number }}</strong></div>
+                        {% elif seat.number %}
+                            <a 
+                                href="#" 
+                                class="{% if tickets['UC'][seat.key] %}taken{% else %}free{% endif %}"
+                                {% if tickets['UC'][seat.key] %}
+                                    data-seat="Dress Circle {{ seat.key }}"
+                                    data-name="{{ tickets['UC'][seat.key].name }}"
+                                    data-link="{{ tickets['UC'][seat.key].link }}"
+                                    data-discord="{{ tickets['UC'][seat.key].discord }}"
+                                {% endif %}
+                            >{{ seat.number }}</a>
+                        {% else %}
+                            <div></div>
+                        {% endif %}
+                        {% if loop.index === 27 %} <div class="number-label">{{ key.row }}</div> {% endif %}
+                    {% endfor%}
+                {% endfor%}
+            </div>
+
+            <div id="dress-circle" class="level-nav">
+                DRESS CIRCLE
+            </div>
+
+        </div>
+
+        <div id="wrap-dresscircle" class="wrap-outer">
+            <h1><span class="header-brand">Dress Circle</span></h1>
+
+            <div class="wrap-seats" style="grid-template-columns: repeat(49, 1fr)">
+                {%- for key in dresscircle.seats %}
+                    {%- for seat in key.seats %}
+                        {% if seat.labelOnly %}
+                            <div>{{ seat.number }}</div>
+                        {% elif seat.number %}
+                            <a 
+                                href="#" 
+                                class="{% if tickets['DC'][seat.key] %}taken{% else %}free{% endif %}"
+                                {% if tickets['DC'][seat.key] %}
+                                    data-seat="Dress Circle {{ seat.key }}"
+                                    data-name="{{ tickets['DC'][seat.key].name }}"
+                                    data-link="{{ tickets['DC'][seat.key].link }}"
+                                    data-discord="{{ tickets['DC'][seat.key].discord }}"
+                                {% endif %}
+                            >{{ seat.number }}</a>
+                        {% else %}
+                            <div></div>
+                        {% endif %}
+                        {% if loop.index === 24 %} <div class="number-label">{{ key.row }}</div> {% endif %}
+                    {% endfor%}
+                {% endfor%}
+            </div>
+
+            <div id="stallslevel" class="level-nav">
+                STALLS
+            </div>
+        </div>
+
+        <div id="wrap-stalls" class="wrap-outer">
+            <h1><span class="header-brand">Stalls</span></h1>
+
+            <div class="wrap-seats" style="grid-template-columns: repeat(31, 1fr)">
+                {%- for key in stalls.seats %}
+                    {%- for seat in key.seats %}
+                        {% if seat.labelOnly %}
+                            <div>{{ seat.number }}</div>
+                        {% elif seat.number %}
+                            <a 
+                                href="#" 
+                                class="{% if tickets['S'][seat.key] %}taken{% else %}free{% endif %}"
+                                {% if tickets['S'][seat.key] %}
+                                    data-seat="Stalls {{ seat.key }}"
+                                    data-name="{{ tickets['S'][seat.key].name }}"
+                                    data-link="{{ tickets['S'][seat.key].link }}"
+                                    data-discord="{{ tickets['S'][seat.key].discord }}"
+                                {% endif %}
+                            >{{ seat.number }}</a>
+                        {% else %}
+                            <div></div>
+                        {% endif %}
+                        {% if loop.index === 15 %} <div class="number-label">{{ key.row }}</div> {% endif %}
+                    {% endfor%}
+                {% endfor%}
+            </div>
+
+            <div id="stage" class="level-nav">
+                STAGE
+            </div>
+        </div>
+
+        <footer>
+            <p>Made by <a href="https://rknight.me">Robb Knight</a></p>
+
+            <p class="update">Last updated: {% timestampxxx %} (UTC)</p>
+        </footer>
+
+        <script>
+            const dialog = document.getElementById("dialog")
+
+            const showModal = (seat, name, link, discord) => {
+                dialog.showModal();
+                if (seat) document.getElementById('modal-seat').innerHTML = seat
+                if (name) document.getElementById('modal-name').innerHTML = name
+                if (link)
+                {
+                    document.getElementById('modal-link').href = link
+                    document.getElementById('modal-link').innerHTML = 'Website'
+                } else {
+                    document.getElementById('modal-link').href = ''
+                    document.getElementById('modal-link').innerHTML = ''
+                }
+                if (discord) 
+                {
+                    document.getElementById('modal-discord').innerHTML = `Discord: ${discord}`
+                } else {
+                    document.getElementById('modal-discord').innerHTML = ''
+                }
+            }
+
+            document.getElementById('close-button').addEventListener('click', (e) => {
+                e.preventDefault()
+                dialog.close()
+            })
+
+            document.getElementById('dress-circle').addEventListener('click', (e) => {
+                e.preventDefault()
+                document.getElementById("dresscircle").checked = true
+            })
+
+            document.getElementById('stallslevel').addEventListener('click', (e) => {
+                e.preventDefault()
+                document.getElementById("stalls").checked = true
+            })
+
+            document.getElementById('stage').addEventListener('click', (e) => {
+                e.preventDefault()
+                showModal('THE STAGE', 'It\'s Rosemary!')
+            })
+            Array.from(document.getElementsByClassName('taken')).map((el) => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault()
+                    const current = e.currentTarget
+                    const { seat, name, link, discord } = current.dataset
+                    showModal(seat, name, link, discord)
+                })
+            })
+        </script>
+
+    </body>
+</html>
