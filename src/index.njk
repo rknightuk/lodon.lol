@@ -140,6 +140,7 @@
                             <a 
                                 href="#" 
                                 class="{% if tickets['S'][seat.key] %}taken{% else %}free{% endif %}"
+                                data-seat-key="{{ seat.key }}"
                                 {% if tickets['S'][seat.key] %}
                                     data-seat="Stalls {{ seat.key }}"
                                     data-name="{{ tickets['S'][seat.key].name }}"
