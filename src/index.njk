@@ -157,7 +157,7 @@
             </div>
 
             <div id="stage" class="level-nav">
-                STAGE
+                Myke Hurley, Stephen Hackett, Federico Viticci, Kathy Campbell 🦄, Jay Miller, Rosemary Orchard</li>
             </div>
         </div>
 
@@ -203,11 +203,6 @@
             document.getElementById('stallslevel').addEventListener('click', (e) => {
                 e.preventDefault()
                 document.getElementById("stalls").checked = true
-            })
-
-            document.getElementById('stage').addEventListener('click', (e) => {
-                e.preventDefault()
-                showModal('THE STAGE', 'Myke Hurley, Stephen Hackett, Federico Viticci, Kathy Campbell 🦄, Rosemary Orchard')
             })
             Array.from(document.getElementsByClassName('taken')).map((el) => {
                 el.addEventListener('click', (e) => {
