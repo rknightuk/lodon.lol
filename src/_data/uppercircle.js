@@ -24,27 +24,17 @@ module.exports = async function() {
 		stalls.push({
 			row: key,
 			seats: values.map((v,i) => {
-				if (['D','E','F'].includes(key) && [19,37].includes(i))
-				{
-					return {
-						taken: false,
-						number: null,
-						label: null,
-						key: null,
-					}
-				} else {
-					let seatNumber = v
-					if (v && key === 'A') {
-						seatNumber = seatNumber + 7
-					} else if (v && key === 'B') {
-						seatNumber = seatNumber + 6
-					}
-					return { 
-						taken: false,
-						number: seatNumber,
-						label: null,
-						key: v ? `${key}${seatNumber}` : null,
-					}
+				let seatNumber = v
+				if (v && key === 'A') {
+					seatNumber = seatNumber + 7
+				} else if (v && key === 'B') {
+					seatNumber = seatNumber + 6
+				}
+				return { 
+					taken: false,
+					number: seatNumber,
+					label: null,
+					key: v ? `${key}${seatNumber}` : null,
 				}
 			})
 		})
