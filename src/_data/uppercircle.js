@@ -33,12 +33,18 @@ module.exports = async function() {
 						key: null,
 					}
 				} else {
+					let seatNumber = v
+					if (v && key === 'A') {
+						seatNumber = seatNumber + 7
+					} else if (v && key === 'B') {
+						seatNumber = seatNumber + 6
+					}
 					return { 
-					taken: false,
-					number: v,
-					label: null,
-					key: v ? `${key}${v}` : null,
-				}
+						taken: false,
+						number: seatNumber,
+						label: null,
+						key: v ? `${key}${seatNumber}` : null,
+					}
 				}
 			})
 		})
